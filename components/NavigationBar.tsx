@@ -4,6 +4,7 @@ import { ViewType } from '../types';
 import ChartBarIcon from './icons/ChartBarIcon';
 import ClockIcon from './icons/ClockIcon';
 import PlusCircleIcon from './icons/PlusCircleIcon';
+import PlayIcon from './icons/PlayIcon';
 
 interface NavigationBarProps {
   activeView: ViewType;
@@ -33,6 +34,15 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ activeView, setActiveView
           </button>
         );
       })}
+      <a
+        href="https://assetteramo.my.canva.site/asset/calcolatore"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex flex-col items-center justify-center w-full h-full transition-colors duration-300 text-gray-500 hover:text-[#D4AF37]"
+      >
+        <div className="p-1"><PlayIcon /></div>
+        <span className="text-xs font-medium">Tutorial</span>
+      </a>
     </nav>
   );
 };
