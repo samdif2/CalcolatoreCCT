@@ -16,7 +16,10 @@ const Header: React.FC = () => {
           className="w-[60px] h-[60px] object-contain"
         />
       </a>
-      <h1 className="ml-4 text-3xl font-bold text-[#2D2D2D]">Calcolatore CCT</h1>
+      <div className="ml-4 flex flex-col">
+        <h1 className="text-3xl font-bold text-[#2D2D2D] leading-tight">Calcolatore CCT</h1>
+        <span className="text-[11px] italic text-gray-500 font-normal">v. luglio 2026</span>
+      </div>
       <a 
         href="https://assetteramo.my.canva.site/asset" 
         target="_blank" 
