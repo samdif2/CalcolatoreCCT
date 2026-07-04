@@ -1,6 +1,6 @@
 
 import React, { useState, useMemo, useCallback } from 'react';
-import { YEAR_OPTIONS, YEAR_PERCENT_MAP } from '../../constants';
+import { YEAR_OPTIONS, MAP_14, MAP_16 } from '../../constants';
 
 // Declare html2pdf for TypeScript
 declare const html2pdf: any;
@@ -23,8 +23,10 @@ interface ClassTimeViewProps {
 const ClassTimeView: React.FC<ClassTimeViewProps> = ({ capital, setCapital, years, setYears }) => {
   const [isExporting, setIsExporting] = useState<boolean>(false);
   const [showMinError, setShowMinError] = useState<boolean>(false);
+  const [percentMode, setPercentMode] = useState<14 | 16>(16);
 
-  const percentage = useMemo(() => YEAR_PERCENT_MAP[years], [years]);
+  const percentageMap = useMemo(() => (percentMode === 14 ? MAP_14 : MAP_16), [percentMode]);
+  const percentage = useMemo(() => percentageMap[years] || 0, [years, percentageMap]);
 
   // --- CALCULATION LOGIC ---
 
@@ -226,7 +228,29 @@ const ClassTimeView: React.FC<ClassTimeViewProps> = ({ capital, setCapital, year
 
   return (
     <div className="p-4 space-y-6">
-      <h2 className="text-2xl font-bold text-[#D4AF37] text-center">ClassTime</h2>
+      <div className="flex items-center justify-center space-x-3">
+        <h2 className="text-2xl font-bold text-[#D4AF37]">ClassTime</h2>
+        <div className="inline-flex bg-gray-200 p-0.5 rounded-full text-xs">
+          <button
+            type="button"
+            onClick={() => setPercentMode(14)}
+            className={`px-2.5 py-0.5 rounded-full transition-all duration-200 ${
+              percentMode === 14 ? 'bg-[#D4AF37] text-white font-semibold shadow-sm' : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            14
+          </button>
+          <button
+            type="button"
+            onClick={() => setPercentMode(16)}
+            className={`px-2.5 py-0.5 rounded-full transition-all duration-200 ${
+              percentMode === 16 ? 'bg-[#D4AF37] text-white font-semibold shadow-sm' : 'text-gray-600 hover:text-gray-900'
+            }`}
+          >
+            16
+          </button>
+        </div>
+      </div>
       <div className="bg-white p-4 rounded-lg shadow-sm">
         <div className="space-y-4">
           
