@@ -11,7 +11,7 @@ const Header: React.FC = () => {
       */}
       <a href="https://assetteramo.my.canva.site/asset" target="_blank" rel="noopener noreferrer">
         <img 
-          src="https://i.postimg.cc/ryZmztmM/Asset_logo_removebg_preview.png" 
+          src="https://github.com/samdif2/CalcolatoreCCT/blob/main/Logo%20ASSET%20Trasparente.png?raw=true" 
           alt="Logo ASSET Teramo" 
           className="w-[60px] h-[60px] object-contain"
         />

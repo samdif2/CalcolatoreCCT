@@ -5,6 +5,7 @@ import NavigationBar from './components/NavigationBar';
 import ClassGoldView from './components/views/ClassGoldView';
 import GoldInTimeView from './components/views/GoldInTimeView';
 import ClassTimeView from './components/views/ClassTimeView';
+import ValoreView from './components/views/ValoreView';
 import { ViewType } from './types';
 
 const App: React.FC = () => {
@@ -21,6 +22,10 @@ const App: React.FC = () => {
   // State for Class + Time (Hybrid)
   const [classTimeCapital, setClassTimeCapital] = useState<number>(15000);
   const [classTimeYears, setClassTimeYears] = useState<number>(15);
+
+  // State for Valore dei tuoi soldi
+  const [valoreCapital, setValoreCapital] = useState<number>(10000);
+  const [valoreYear, setValoreYear] = useState<number>(2020);
 
   const renderView = () => {
     switch (activeView) {
@@ -49,6 +54,15 @@ const App: React.FC = () => {
             setCapital={setClassTimeCapital}
             years={classTimeYears}
             setYears={setClassTimeYears}
+          />
+        );
+      case 'valore':
+        return (
+          <ValoreView
+            capital={valoreCapital}
+            setCapital={setValoreCapital}
+            year={valoreYear}
+            setYear={setValoreYear}
           />
         );
       default:

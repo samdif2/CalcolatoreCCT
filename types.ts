@@ -1,5 +1,5 @@
 
-export type ViewType = 'class' | 'time' | 'c+t';
+export type ViewType = 'class' | 'time' | 'c+t' | 'valore';
 
 export interface YearlyData {
   year: number;

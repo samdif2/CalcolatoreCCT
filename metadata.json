@@ -1,5 +1,8 @@
 {
   "name": "Calcolatore CCT v21",
   "description": "Calcolatore CCT by ASSET Teramo",
-  "requestFramePermissions": []
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }
