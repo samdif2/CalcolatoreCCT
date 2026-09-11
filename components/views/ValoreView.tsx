@@ -94,6 +94,19 @@ const ValoreView: React.FC<ValoreViewProps> = ({ capital, setCapital, year, setY
 
     setIsExporting(true);
 
+    const contentClone = element.cloneNode(true) as HTMLElement;
+
+    // Remove buttons in clone
+    const buttonsInClone = contentClone.querySelectorAll('button');
+    buttonsInClone.forEach((b) => b.remove());
+
+    // Reset grid to single column on PDF for clean A4 printing
+    const gridEl = contentClone.querySelector('.grid');
+    if (gridEl) {
+      gridEl.classList.remove('md:grid-cols-2', 'landscape:grid-cols-2');
+      gridEl.classList.add('grid-cols-1');
+    }
+
     const opt = {
       margin: [10, 10, 10, 10],
       filename: `Report_Valore_Soldi_${capital}EUR_${year}.pdf`,
@@ -105,7 +118,7 @@ const ValoreView: React.FC<ValoreViewProps> = ({ capital, setCapital, year, setY
     if (typeof html2pdf !== 'undefined') {
       html2pdf()
         .set(opt)
-        .from(element)
+        .from(contentClone)
         .save()
         .then(() => {
           setIsExporting(false);
@@ -126,7 +139,7 @@ const ValoreView: React.FC<ValoreViewProps> = ({ capital, setCapital, year, setY
 
       {/* Inputs Card */}
       <div className="bg-white p-4 rounded-lg shadow-sm">
-        <div className="space-y-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 landscape:grid-cols-2 gap-4 items-center">
           {/* Capital Input - senza limiti minimi e massimi */}
           <div className="flex items-center space-x-4">
             <label htmlFor="capital-valore-input" className="text-sm font-medium text-gray-700 whitespace-nowrap">
@@ -184,87 +197,116 @@ const ValoreView: React.FC<ValoreViewProps> = ({ capital, setCapital, year, setY
       </div>
 
       {/* Printable / Report Container */}
-      <div id="printable-content-valore" className="space-y-6 bg-white p-4 rounded-lg shadow-sm">
-        {/* Output centrale riquadro sfondo rosso: Valore Oggi */}
-        <div className="bg-[#DC2626] text-white p-6 rounded-lg shadow-lg text-center">
-          <h3 className="text-sm uppercase tracking-widest font-semibold">VALORE OGGI</h3>
-          <p className="text-5xl font-extrabold my-2">{formatCurrency(calculation.valoreOggi)}</p>
-          <p className="text-sm opacity-95 font-medium">
-            Perdita potere d'acquisto: -{formatCurrency(calculation.lossAmount)} (-{calculation.lossPercent.toFixed(1).replace('.', ',')}%)
-          </p>
-          <p className="text-xs opacity-80 mt-1">
-            Inflazione cumulata ({year}-2026): +{calculation.cumulativeInflationPercent.toFixed(1).replace('.', ',')}%
-          </p>
-        </div>
+      <div id="printable-content-valore" className="bg-white p-4 rounded-lg shadow-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 landscape:grid-cols-2 gap-6 items-start">
+          {/* Left Column (Boxes) in horizontal / Top in vertical */}
+          <div className="space-y-6">
+            {/* Output centrale riquadro sfondo rosso: Valore Oggi */}
+            <div className="bg-[#DC2626] text-white p-6 rounded-lg shadow-lg text-center">
+              <h3 className="text-sm uppercase tracking-widest font-semibold">VALORE OGGI</h3>
+              <p className="text-5xl font-extrabold my-2">{formatCurrency(calculation.valoreOggi)}</p>
+              <p className="text-sm opacity-95 font-medium">
+                Perdita potere d'acquisto: -{formatCurrency(calculation.lossAmount)} (-{calculation.lossPercent.toFixed(1).replace('.', ',')}%)
+              </p>
+              <p className="text-xs opacity-80 mt-1">
+                Inflazione cumulata ({year}-2026): +{calculation.cumulativeInflationPercent.toFixed(1).replace('.', ',')}%
+              </p>
+            </div>
 
-        {/* Nuovo riquadro color oro: Valore oggi in oro */}
-        <div className="bg-[#D4AF37] text-white p-6 rounded-lg shadow-lg text-center">
-          <h3 className="text-sm uppercase tracking-widest font-semibold">VALORE OGGI IN ORO</h3>
-          <p className="text-5xl font-extrabold my-2">{formatCurrency(calculation.valoreOroOggi)}</p>
-          <p className="text-sm opacity-95 font-medium">
-            Rivalutazione oro: {calculation.goldGainAmount >= 0 ? '+' : ''}{formatCurrency(calculation.goldGainAmount)} ({calculation.goldGainAmount >= 0 ? '+' : ''}{calculation.goldGainPercent.toFixed(1).replace('.', ',')}%)
-          </p>
-          <p className="text-xs opacity-90 mt-1">
-            {calculation.gramsPurchased.toFixed(2).replace('.', ',')} grammi acquistati nel {year} ({GOLD_PRICES[year]?.toFixed(2).replace('.', ',')} €/g → {GOLD_PRICES[2026]?.toFixed(2).replace('.', ',')} €/g)
-          </p>
-        </div>
+            {/* Nuovo riquadro color oro: Valore oggi in oro */}
+            <div className="bg-[#D4AF37] text-white p-6 rounded-lg shadow-lg text-center">
+              <h3 className="text-sm uppercase tracking-widest font-semibold">VALORE OGGI IN ORO</h3>
+              <p className="text-5xl font-extrabold my-2">{formatCurrency(calculation.valoreOroOggi)}</p>
+              <p className="text-sm opacity-95 font-medium">
+                Rivalutazione oro: {calculation.goldGainAmount >= 0 ? '+' : ''}{formatCurrency(calculation.goldGainAmount)} ({calculation.goldGainAmount >= 0 ? '+' : ''}{calculation.goldGainPercent.toFixed(1).replace('.', ',')}%)
+              </p>
+              <p className="text-xs opacity-90 mt-1">
+                {calculation.gramsPurchased.toFixed(2).replace('.', ',')} grammi acquistati nel {year} ({GOLD_PRICES[year]?.toFixed(2).replace('.', ',')} €/g → {GOLD_PRICES[2026]?.toFixed(2).replace('.', ',')} €/g)
+              </p>
+            </div>
 
-        {/* Detailed Breakdown Table */}
-        <div>
-          <h3 className="text-lg font-bold text-gray-800 mb-2">Dettaglio</h3>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm text-left">
-              <thead className="text-xs text-gray-500 uppercase bg-gray-50">
-                <tr>
-                  <th className="py-2 px-3">Anno</th>
-                  <th className="py-2 px-3 text-right">Valore in euro</th>
-                  <th className="py-2 px-3 text-right">Valore in oro</th>
-                </tr>
-              </thead>
-              <tbody>
-                {calculation.breakdown.map((row) => (
-                  <tr key={row.year} className="border-b border-gray-100 hover:bg-gray-50">
-                    <td className="py-2 px-3 font-medium text-gray-900">
-                      {row.year}{row.year === 2026 ? '*' : ''}
-                    </td>
-                    <td className="py-2 px-3 text-right font-semibold text-[#DC2626]">
-                      {formatCurrency(row.purchasingPower)}
-                    </td>
-                    <td className="py-2 px-3 text-right font-semibold text-black">
-                      {formatCurrency(row.valoreOro)}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+            {/* Desktop / Landscape PDF Export Button */}
+            <div className="hidden md:block landscape:block pt-2">
+              <button
+                type="button"
+                onClick={handleExportPDF}
+                disabled={isExporting}
+                className="w-full py-3 px-4 bg-[#D4AF37] hover:bg-[#b8972e] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
+              >
+                {isExporting ? (
+                  <span>Generazione PDF in corso...</span>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>Esporta Report in PDF</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+
+          {/* Right Column (Table + Footer) in horizontal / Bottom in vertical */}
+          <div className="space-y-6">
+            {/* Detailed Breakdown Table */}
+            <div>
+              <h3 className="text-lg font-bold text-gray-800 mb-2">Dettaglio</h3>
+              <div className="overflow-x-auto">
+                <table className="w-full text-sm text-left">
+                  <thead className="text-xs text-gray-500 uppercase bg-gray-50">
+                    <tr>
+                      <th className="py-2 px-3">Anno</th>
+                      <th className="py-2 px-3 text-right">Valore in euro</th>
+                      <th className="py-2 px-3 text-right">Valore in oro</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {calculation.breakdown.map((row) => (
+                      <tr key={row.year} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="py-2 px-3 font-medium text-gray-900">
+                          {row.year}{row.year === 2026 ? '*' : ''}
+                        </td>
+                        <td className="py-2 px-3 text-right font-semibold text-[#DC2626]">
+                          {formatCurrency(row.purchasingPower)}
+                        </td>
+                        <td className="py-2 px-3 text-right font-semibold text-black">
+                          {formatCurrency(row.valoreOro)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            {/* Brand Footer */}
+            <div className="pt-4 border-t border-gray-200 text-center text-xs text-gray-500 italic">
+              <p>Realizzato da ASSET Teramo - Piazza Martiri Pennesi, 4 - 64100 - Teramo</p>
+            </div>
+
+            {/* Mobile portrait PDF Export Button */}
+            <div className="block md:hidden landscape:hidden pt-2">
+              <button
+                type="button"
+                onClick={handleExportPDF}
+                disabled={isExporting}
+                className="w-full py-3 px-4 bg-[#D4AF37] hover:bg-[#b8972e] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
+              >
+                {isExporting ? (
+                  <span>Generazione PDF in corso...</span>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <span>Esporta Report in PDF</span>
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </div>
-
-        {/* Brand Footer */}
-        <div className="mt-8 pt-4 border-t border-gray-200 text-center text-xs text-gray-500 italic">
-          <p>Realizzato da ASSET Teramo - Piazza Martiri Pennesi, 4 - 64100 - Teramo</p>
-        </div>
-      </div>
-
-      {/* PDF Export Button */}
-      <div className="pt-2 flex justify-center">
-        <button
-          type="button"
-          onClick={handleExportPDF}
-          disabled={isExporting}
-          className="w-full py-3 px-4 bg-[#D4AF37] hover:bg-[#b8972e] text-white font-semibold rounded-lg shadow-md hover:shadow-lg transition-all duration-200 flex items-center justify-center space-x-2 disabled:opacity-50"
-        >
-          {isExporting ? (
-            <span>Generazione PDF in corso...</span>
-          ) : (
-            <>
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              <span>Esporta Report in PDF</span>
-            </>
-          )}
-        </button>
       </div>
     </div>
   );

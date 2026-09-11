@@ -78,9 +78,9 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="h-screen w-full max-w-md mx-auto flex flex-col bg-[#FAFAFA] text-[#2D2D2D] shadow-lg">
+    <div className="h-screen w-full max-w-md landscape:max-w-5xl md:max-w-4xl lg:max-w-6xl mx-auto flex flex-col bg-[#FAFAFA] text-[#2D2D2D] shadow-lg transition-all duration-300">
       <Header />
-      <main className="flex-grow overflow-y-auto pb-20">
+      <main className="flex-grow overflow-y-auto pb-24 px-1 sm:px-3">
         {renderView()}
       </main>
       <NavigationBar activeView={activeView} setActiveView={setActiveView} />

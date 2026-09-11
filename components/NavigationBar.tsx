@@ -20,7 +20,7 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ activeView, setActiveView
   ];
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 h-20 bg-white border-t border-gray-200 flex justify-around items-center max-w-md mx-auto">
+    <nav className="fixed bottom-0 left-0 right-0 h-16 md:h-20 bg-white border-t border-gray-200 flex justify-around items-center max-w-md landscape:max-w-5xl md:max-w-4xl lg:max-w-6xl mx-auto z-40 transition-all duration-300">
       {navItems.map((item) => {
         const isActive = activeView === item.id;
         return (
@@ -29,9 +29,9 @@ const NavigationBar: React.FC<NavigationBarProps> = ({ activeView, setActiveView
             onClick={() => setActiveView(item.id)}
             className={`flex flex-col items-center justify-center w-full h-full transition-colors duration-300 ${isActive ? 'text-[#D4AF37]' : 'text-gray-500'}`}
           >
-            <div className={`p-1 ${isActive ? 'scale-110' : ''}`}>{item.icon}</div>
-            <span className="text-xs font-medium">{item.label}</span>
-            {isActive && <div className="w-8 h-1 bg-[#D4AF37] rounded-full mt-1"></div>}
+            <div className={`p-0.5 md:p-1 ${isActive ? 'scale-110' : ''}`}>{item.icon}</div>
+            <span className="text-[11px] md:text-xs font-medium leading-tight">{item.label}</span>
+            {isActive && <div className="w-8 h-1 bg-[#D4AF37] rounded-full mt-0.5 md:mt-1"></div>}
           </button>
         );
       })}

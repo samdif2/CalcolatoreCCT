@@ -4,20 +4,20 @@ import HomeIcon from './icons/HomeIcon';
 
 const Header: React.FC = () => {
   return (
-    <header className="flex-shrink-0 bg-[#FAFAFA] p-4 flex items-center border-b border-gray-200">
+    <header className="flex-shrink-0 bg-[#FAFAFA] p-3 md:p-4 flex items-center border-b border-gray-200">
       {/* 
         NOTA: Sostituisci l'URL qui sotto con il percorso della tua immagine (es. /logo.png) 
         o la stringa Base64 del logo che hai fornito.
       */}
       <a href="https://assetteramo.my.canva.site/asset" target="_blank" rel="noopener noreferrer">
         <img 
-          src="https://github.com/samdif2/CalcolatoreCCT/blob/main/Logo%20ASSET%20Trasparente.png?raw=true" 
+          src="https://i.ibb.co/Ld9mytGN/Logo-ASSET-Trasparente.png" 
           alt="Logo ASSET Teramo" 
-          className="w-[60px] h-[60px] object-contain"
+          className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] object-contain"
         />
       </a>
-      <div className="ml-4 flex flex-col">
-        <h1 className="text-3xl font-bold text-[#2D2D2D] leading-tight">Calcolatore CCT</h1>
+      <div className="ml-3 md:ml-4 flex flex-col">
+        <h1 className="text-2xl md:text-3xl font-bold text-[#2D2D2D] leading-tight">Calcolatore CCT</h1>
         <span className="text-[11px] italic text-gray-500 font-normal">v. luglio 2026</span>
       </div>
       <a 
