@@ -24,7 +24,8 @@ const App: React.FC = () => {
   const [classTimeYears, setClassTimeYears] = useState<number>(15);
 
   // State for Valore dei tuoi soldi
-  const [valoreCapital, setValoreCapital] = useState<number>(10000);
+  const [valoreCapital, setValoreCapital] = useState<number>(0);
+  const [valoreMonthlySavings, setValoreMonthlySavings] = useState<number>(0);
   const [valoreYear, setValoreYear] = useState<number>(2020);
 
   const renderView = () => {
@@ -61,6 +62,8 @@ const App: React.FC = () => {
           <ValoreView
             capital={valoreCapital}
             setCapital={setValoreCapital}
+            monthlySavings={valoreMonthlySavings}
+            setMonthlySavings={setValoreMonthlySavings}
             year={valoreYear}
             setYear={setValoreYear}
           />
