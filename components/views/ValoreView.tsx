@@ -23,8 +23,8 @@ const ValoreView: React.FC<ValoreViewProps> = ({
 }) => {
   const [isExporting, setIsExporting] = useState<boolean>(false);
 
-  // How many years have passed compared to 2026 (e.g. 2020 -> 6, 2011 -> 15)
-  const yearsPassed = useMemo(() => 2026 - year, [year]);
+  // How many years have passed compared to 2026 (considering both start and end year, e.g. 2020 -> 7)
+  const yearsPassed = useMemo(() => 2026 - year + 1, [year]);
 
   // Calculation of purchasing power, inflation, capital evolution and gold value
   const calculation = useMemo(() => {
@@ -282,7 +282,7 @@ const ValoreView: React.FC<ValoreViewProps> = ({
             {/* Risparmio annuale indicato se impostato risparmio mensile */}
             {monthlySavings > 0 && (
               <div className="flex justify-between items-center bg-gray-50 border border-gray-200 px-3 py-2 rounded-md text-xs text-gray-600">
-                <span>Risparmio annuale (x12):</span>
+                <span>Risparmio annuale:</span>
                 <span className="font-bold text-gray-800">{formatCurrency(monthlySavings * 12)}</span>
               </div>
             )}
@@ -291,7 +291,16 @@ const ValoreView: React.FC<ValoreViewProps> = ({
       </div>
 
       {/* Printable / Report Container */}
-      <div id="printable-content-valore" className="bg-white p-4 rounded-lg shadow-sm">
+      <div id="printable-content-valore" className="bg-white p-4 rounded-lg shadow-sm space-y-6">
+        {/* Scritta bianca su sfondo verde: Capitale accumulato */}
+        <div className="bg-[#16A34A] text-white p-5 rounded-lg shadow-md text-center">
+          <h3 className="text-sm uppercase tracking-widest font-semibold">CAPITALE ACCUMULATO</h3>
+          <p className="text-4xl sm:text-5xl font-extrabold my-2">{formatCurrency(calculation.totalInvested)}</p>
+          <p className="text-xs sm:text-sm opacity-95 font-medium">
+            Capitale iniziale ({formatCurrency(capital)}) + Risparmio annuale ({formatCurrency(calculation.annualSavings)} × {yearsPassed} anni)
+          </p>
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 landscape:grid-cols-2 gap-6 items-start">
           {/* Left Column (Boxes) in horizontal / Top in vertical */}
           <div className="space-y-6">
