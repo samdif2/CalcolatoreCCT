@@ -13,10 +13,10 @@ interface NavigationBarProps {
 
 const NavigationBar: React.FC<NavigationBarProps> = ({ activeView, setActiveView }) => {
   const navItems = [
+    { id: 'valore' as ViewType, label: 'Valore', icon: <MoneyBagIcon /> },
     { id: 'class' as ViewType, label: 'Class', icon: <ChartBarIcon /> },
     { id: 'time' as ViewType, label: 'Time', icon: <ClockIcon /> },
     { id: 'c+t' as ViewType, label: 'ClassTime', icon: <PlusCircleIcon /> },
-    { id: 'valore' as ViewType, label: 'Valore', icon: <MoneyBagIcon /> },
   ];
 
   return (

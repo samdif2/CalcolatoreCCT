@@ -9,7 +9,7 @@ import ValoreView from './components/views/ValoreView';
 import { ViewType } from './types';
 
 const App: React.FC = () => {
-  const [activeView, setActiveView] = useState<ViewType>('class');
+  const [activeView, setActiveView] = useState<ViewType>('valore');
   
   // State for Class Gold
   const [classCapital, setClassCapital] = useState<number>(15000);
