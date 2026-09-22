@@ -112,7 +112,7 @@ const PensioneView: React.FC<PensioneViewProps> = ({
         <h3 className="text-sm uppercase tracking-widest font-semibold">ULTIMO STIPENDIO</h3>
         <p className="text-5xl font-extrabold my-2">{formatCurrency(lastSalary)}</p>
         <p className="text-xs sm:text-sm opacity-90 font-medium">
-          Incremento stimato dell'1,8% annuo ({years} {years === 1 ? 'anno' : 'anni'})
+          Incremento stimato dell'1,8% annuo*
         </p>
       </div>
 
@@ -121,7 +121,7 @@ const PensioneView: React.FC<PensioneViewProps> = ({
         <h3 className="text-sm uppercase tracking-widest font-semibold">PENSIONE</h3>
         <p className="text-5xl font-extrabold my-2">{formatCurrency(pensioneAmount)}</p>
         <p className="text-xs sm:text-sm opacity-90 font-medium">
-          70% dell'ultimo stipendio
+          70% dell'ultimo stipendio*
         </p>
       </div>
 
@@ -130,7 +130,14 @@ const PensioneView: React.FC<PensioneViewProps> = ({
         <h3 className="text-sm uppercase tracking-widest font-semibold">POTERE DI ACQUISTO</h3>
         <p className="text-5xl font-extrabold my-2">{formatCurrency(purchasingPower)}</p>
         <p className="text-xs sm:text-sm opacity-90 font-medium">
-          Inflazione 3% annua
+          Inflazione 3% annua*
+        </p>
+      </div>
+
+      {/* Nota esplicativa in corsivo grigio */}
+      <div className="pt-2 px-2">
+        <p className="text-xs italic text-gray-500 text-center leading-relaxed">
+          * i calcoli sono eseguiti considerando l'aumento di stipendio medio degli ultimi 20 anni di un operaio generico, il calcolo per la pensione media in base allo stipendio medio dell'ultimo anno e  l'inflazione media degli ultimi 20 anni.
         </p>
       </div>
     </div>

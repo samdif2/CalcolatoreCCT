@@ -13,11 +13,11 @@ const App: React.FC = () => {
   const [activeView, setActiveView] = useState<ViewType>('valore');
   
   // State for Class Gold
-  const [classCapital, setClassCapital] = useState<number>(15000);
+  const [classCapital, setClassCapital] = useState<number>(0);
   const [classYears, setClassYears] = useState<number>(15);
 
-  // State for Gold in Time (Independent) - Default updated to 2400
-  const [timeCapital, setTimeCapital] = useState<number>(2400);
+  // State for Gold in Time (Independent)
+  const [timeCapital, setTimeCapital] = useState<number>(0);
   const [timeYears, setTimeYears] = useState<number>(15);
 
   // State for Class + Time (Hybrid)

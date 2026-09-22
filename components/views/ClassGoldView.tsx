@@ -199,7 +199,7 @@ const ClassGoldView: React.FC<ClassGoldViewProps> = ({ capital, setCapital, year
         <div className="grid grid-cols-1 md:grid-cols-2 landscape:grid-cols-2 gap-4 items-center">
           {/* Capital Input with Dynamic Formatting */}
           <div className="flex items-center space-x-4">
-            <label htmlFor="capital" className="text-sm font-medium text-gray-700 whitespace-nowrap">Capitale</label>
+            <label htmlFor="capital" className="text-sm font-medium text-gray-700 whitespace-nowrap">Deposito</label>
             <input
               type="text"
               inputMode="numeric"
@@ -256,7 +256,7 @@ const ClassGoldView: React.FC<ClassGoldViewProps> = ({ capital, setCapital, year
             <div className="bg-[#D4AF37] text-white p-6 rounded-lg shadow-lg text-center">
                 <h3 className="text-sm uppercase tracking-widest">TOTALE</h3>
                 <p className="text-5xl font-extrabold my-2">{formatCurrency(totalValue)}</p>
-                <p className="text-sm opacity-90">{formatCurrency(capital)} (Capitale) + {formatCurrency(totalRevenue)} (Ricavi)</p>
+                <p className="text-sm opacity-90">{formatCurrency(capital)} (Deposito) + {formatCurrency(totalRevenue)} (Ricavi)</p>
             </div>
 
             {/* Export button on desktop/landscape */}
