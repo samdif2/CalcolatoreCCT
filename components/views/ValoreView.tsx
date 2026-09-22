@@ -203,10 +203,10 @@ const ValoreView: React.FC<ValoreViewProps> = ({
         <div className="grid grid-cols-1 md:grid-cols-2 landscape:grid-cols-2 gap-4 items-center">
           {/* Left Column: Capitale iniziale & Risparmio mensile */}
           <div className="space-y-4">
-            {/* Capitale iniziale Input */}
+            {/* Risparmio iniziale Input */}
             <div className="flex items-center space-x-3 sm:space-x-4">
               <label htmlFor="capital-valore-input" className="text-sm font-medium text-gray-700 whitespace-nowrap min-w-[115px]">
-                Capitale iniziale
+                Risparmio iniziale
               </label>
               <input
                 type="text"
@@ -297,7 +297,7 @@ const ValoreView: React.FC<ValoreViewProps> = ({
           <h3 className="text-sm uppercase tracking-widest font-semibold">CAPITALE ACCUMULATO</h3>
           <p className="text-4xl sm:text-5xl font-extrabold my-2">{formatCurrency(calculation.totalInvested)}</p>
           <p className="text-xs sm:text-sm opacity-95 font-medium">
-            Capitale iniziale ({formatCurrency(capital)}) + Risparmio annuale ({formatCurrency(calculation.annualSavings)} × {yearsPassed} anni)
+            Risparmio iniziale ({formatCurrency(capital)}) + Risparmio annuale ({formatCurrency(calculation.annualSavings)} × {yearsPassed} anni)
           </p>
         </div>
 
@@ -320,12 +320,9 @@ const ValoreView: React.FC<ValoreViewProps> = ({
             <div className="bg-[#D4AF37] text-white p-6 rounded-lg shadow-lg text-center">
               <h3 className="text-sm uppercase tracking-widest font-semibold">VALORE OGGI IN ORO</h3>
               <p className="text-5xl font-extrabold my-2">{formatCurrency(calculation.valoreOroOggi)}</p>
-              <p className="text-sm opacity-95 font-medium">
-                Rivalutazione oro: {calculation.goldGainAmount >= 0 ? '+' : ''}{formatCurrency(calculation.goldGainAmount)} ({calculation.goldGainAmount >= 0 ? '+' : ''}{calculation.goldGainPercent.toFixed(1).replace('.', ',')}%)
-              </p>
               {calculation.annualSavings > 0 ? (
                 <p className="text-xs opacity-90 mt-1">
-                  {calculation.totalGrams.toFixed(2).replace('.', ',')} grammi accumulati ({year}-2026) · Prezzo oro oggi: {GOLD_PRICES[2026]?.toFixed(2).replace('.', ',')} €/g
+                  {calculation.totalGrams.toFixed(2).replace('.', ',')} grammi accumulati ({year}-2026)
                 </p>
               ) : (
                 <p className="text-xs opacity-90 mt-1">

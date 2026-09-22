@@ -6,6 +6,7 @@ import ClassGoldView from './components/views/ClassGoldView';
 import GoldInTimeView from './components/views/GoldInTimeView';
 import ClassTimeView from './components/views/ClassTimeView';
 import ValoreView from './components/views/ValoreView';
+import PensioneView from './components/views/PensioneView';
 import { ViewType } from './types';
 
 const App: React.FC = () => {
@@ -27,6 +28,10 @@ const App: React.FC = () => {
   const [valoreCapital, setValoreCapital] = useState<number>(0);
   const [valoreMonthlySavings, setValoreMonthlySavings] = useState<number>(0);
   const [valoreYear, setValoreYear] = useState<number>(2020);
+
+  // State for Pensione
+  const [pensioneYears, setPensioneYears] = useState<number>(10);
+  const [pensioneSalary, setPensioneSalary] = useState<number>(0);
 
   const renderView = () => {
     switch (activeView) {
@@ -66,6 +71,15 @@ const App: React.FC = () => {
             setMonthlySavings={setValoreMonthlySavings}
             year={valoreYear}
             setYear={setValoreYear}
+          />
+        );
+      case 'pensione':
+        return (
+          <PensioneView
+            years={pensioneYears}
+            setYears={setPensioneYears}
+            salary={pensioneSalary}
+            setSalary={setPensioneSalary}
           />
         );
       default:

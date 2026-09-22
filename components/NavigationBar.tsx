@@ -5,6 +5,7 @@ import ChartBarIcon from './icons/ChartBarIcon';
 import ClockIcon from './icons/ClockIcon';
 import PlusCircleIcon from './icons/PlusCircleIcon';
 import MoneyBagIcon from './icons/MoneyBagIcon';
+import PersonIcon from './icons/PersonIcon';
 
 interface NavigationBarProps {
   activeView: ViewType;
@@ -14,6 +15,7 @@ interface NavigationBarProps {
 const NavigationBar: React.FC<NavigationBarProps> = ({ activeView, setActiveView }) => {
   const navItems = [
     { id: 'valore' as ViewType, label: 'Valore', icon: <MoneyBagIcon /> },
+    { id: 'pensione' as ViewType, label: 'Pensione', icon: <PersonIcon /> },
     { id: 'class' as ViewType, label: 'Class', icon: <ChartBarIcon /> },
     { id: 'time' as ViewType, label: 'Time', icon: <ClockIcon /> },
     { id: 'c+t' as ViewType, label: 'ClassTime', icon: <PlusCircleIcon /> },

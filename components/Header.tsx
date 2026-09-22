@@ -11,14 +11,14 @@ const Header: React.FC = () => {
       */}
       <a href="https://assetteramo.my.canva.site/asset" target="_blank" rel="noopener noreferrer">
         <img 
-          src="https://i.ibb.co/Ld9mytGN/Logo-ASSET-Trasparente.png" 
+          src="https://i.ibb.co/ZpnFtgqF/ASSET-logo-new-solo-im-removebg-preview.png" 
           alt="Logo ASSET Teramo" 
           className="w-[50px] h-[50px] md:w-[60px] md:h-[60px] object-contain"
         />
       </a>
       <div className="ml-3 md:ml-4 flex flex-col">
         <h1 className="text-2xl md:text-3xl font-bold text-[#2D2D2D] leading-tight">Calcolatore CCT</h1>
-        <span className="text-[11px] italic text-gray-500 font-normal">v. luglio 2026</span>
+        <span className="text-[11px] italic text-gray-500 font-normal">v. settembre 2026</span>
       </div>
       <a 
         href="https://assetteramo.my.canva.site/asset" 
