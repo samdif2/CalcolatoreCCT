@@ -264,94 +264,68 @@ const GoldInTimeView: React.FC<GoldInTimeViewProps> = ({ capital, setCapital, ye
         </div>
       </div>
       
-      <div id="pdf-export-area-time">
-        <div className="grid grid-cols-1 md:grid-cols-2 landscape:grid-cols-2 gap-6 items-start">
-          {/* Left Column in horizontal / Top in vertical */}
-          <div className="space-y-6">
-            <div className="bg-[#D4AF37] text-white p-6 rounded-lg shadow-lg text-center">
-                <h3 className="text-sm uppercase tracking-widest">TOTALE</h3>
-                <p className="text-5xl font-extrabold my-2">{formatCurrency(totalValue)}</p>
-                <p className="text-sm opacity-90">{formatCurrency(totalInvestedCapital)} (Accumulo annuale) + {formatCurrency(totalRevenue)} (Ricavi)</p>
-            </div>
+      <div id="pdf-export-area-time" className="space-y-6">
+        {/* Riquadro Totale a tutta larghezza */}
+        <div className="bg-[#D4AF37] text-white p-6 rounded-lg shadow-lg text-center">
+            <h3 className="text-sm uppercase tracking-widest">TOTALE</h3>
+            <p className="text-5xl font-extrabold my-2">{formatCurrency(totalValue)}</p>
+            <p className="text-sm opacity-90">{formatCurrency(totalInvestedCapital)} (Accumulo annuale) + {formatCurrency(totalRevenue)} (Ricavi)</p>
+        </div>
 
-            {/* Export button on desktop/landscape */}
-            <div className="hidden md:block landscape:block pt-2">
-              <button
-                  type="button"
-                  onClick={handleExportPDF}
-                  disabled={isExporting}
-                  className="w-full bg-[#EF4444] text-white font-bold py-3 px-4 rounded-lg shadow-md hover:bg-red-600 transition-all duration-300 flex items-center justify-center disabled:bg-gray-400"
-              >
-                  {isExporting ? (
-                      <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Esportazione...
-                      </>
-                  ) : (
-                      'Esporta Report in PDF'
-                  )}
-              </button>
-            </div>
+        {/* Dettagli scorrendo, dopo i riquadri */}
+        <div className="space-y-6">
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+              <h3 className="text-lg font-semibold mb-3">Piano di Accumulo Dettagliato</h3>
+              <div className="overflow-x-auto">
+                  <table className="w-full text-sm text-left text-gray-500">
+                      <thead className="text-xs text-gray-700 uppercase bg-gray-50">
+                          <tr>
+                              <th scope="col" className="px-4 py-3">Anno</th>
+                              <th scope="col" className="px-4 py-3">Capitale</th>
+                              <th scope="col" className="px-4 py-3">%</th>
+                              <th scope="col" className="px-4 py-3">Ricavo</th>
+                              <th scope="col" className="px-4 py-3">Accumulo</th>
+                          </tr>
+                      </thead>
+                      <tbody>
+                          {yearlyData.map((row) => (
+                              <tr key={row.year} className="bg-white border-b">
+                                  <td className="px-4 py-4 font-medium text-gray-900">{row.year}</td>
+                                  <td className="px-4 py-4">{formatCurrency(row.capital)}</td>
+                                  <td className="px-4 py-4 text-[#D4AF37] font-bold">{row.percentage}%</td>
+                                  <td className="px-4 py-4 text-green-600">{formatCurrency(row.yearlyRevenue)}</td>
+                                  <td className="px-4 py-4 font-semibold text-gray-900">{formatCurrency(row.accumulated)}</td>
+                              </tr>
+                          ))}
+                      </tbody>
+                  </table>
+              </div>
           </div>
 
-          {/* Right Column in horizontal / Bottom in vertical */}
-          <div className="space-y-6">
-            <div className="bg-white p-4 rounded-lg shadow-sm">
-                <h3 className="text-lg font-semibold mb-3">Piano di Accumulo Dettagliato</h3>
-                <div className="overflow-x-auto">
-                    <table className="w-full text-sm text-left text-gray-500">
-                        <thead className="text-xs text-gray-700 uppercase bg-gray-50">
-                            <tr>
-                                <th scope="col" className="px-4 py-3">Anno</th>
-                                <th scope="col" className="px-4 py-3">Capitale</th>
-                                <th scope="col" className="px-4 py-3">%</th>
-                                <th scope="col" className="px-4 py-3">Ricavo</th>
-                                <th scope="col" className="px-4 py-3">Accumulo</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {yearlyData.map((row) => (
-                                <tr key={row.year} className="bg-white border-b">
-                                    <td className="px-4 py-4 font-medium text-gray-900">{row.year}</td>
-                                    <td className="px-4 py-4">{formatCurrency(row.capital)}</td>
-                                    <td className="px-4 py-4 text-[#D4AF37] font-bold">{row.percentage}%</td>
-                                    <td className="px-4 py-4 text-green-600">{formatCurrency(row.yearlyRevenue)}</td>
-                                    <td className="px-4 py-4 font-semibold text-gray-900">{formatCurrency(row.accumulated)}</td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+          <div className="pt-4 border-t border-gray-200 text-center text-xs text-gray-500 italic">
+              <p>Realizzato da ASSET Teramo - Piazza Martiri Pennesi, 4 - 64100 - Teramo</p>
+          </div>
 
-            <div className="pt-4 border-t border-gray-200 text-center text-xs text-gray-500 italic">
-                <p>Realizzato da ASSET Teramo - Piazza Martiri Pennesi, 4 - 64100 - Teramo</p>
-            </div>
-
-            {/* Export button on mobile portrait */}
-            <div className="block md:hidden landscape:hidden pt-2">
-              <button
-                  type="button"
-                  onClick={handleExportPDF}
-                  disabled={isExporting}
-                  className="w-full bg-[#EF4444] text-white font-bold py-3 px-4 rounded-lg shadow-md hover:bg-red-600 transition-all duration-300 flex items-center justify-center disabled:bg-gray-400"
-              >
-                  {isExporting ? (
-                      <>
-                      <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                          <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                          <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                      </svg>
-                      Esportazione...
-                      </>
-                  ) : (
-                      'Esporta Report in PDF'
-                  )}
-              </button>
-            </div>
+          {/* Export button */}
+          <div className="pt-2">
+            <button
+                type="button"
+                onClick={handleExportPDF}
+                disabled={isExporting}
+                className="w-full bg-[#EF4444] text-white font-bold py-3 px-4 rounded-lg shadow-md hover:bg-red-600 transition-all duration-300 flex items-center justify-center disabled:bg-gray-400"
+            >
+                {isExporting ? (
+                    <>
+                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                        <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Esportazione...
+                    </>
+                ) : (
+                    'Esporta Report in PDF'
+                )}
+            </button>
           </div>
         </div>
       </div>
